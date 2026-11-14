@@ -222,5 +222,36 @@ return;
 alert("Your CINOVA studio interface is working! The AI video generation engine is the next stage of development.");
 }
 </script>
+
+<script>
+const CINOVA_API = "https://cinova-backend.finncolts.workers.dev";
+
+async function checkCINOVABackend() {
+  const statusElement = document.getElementById("backend-status");
+
+  try {
+    const response = await fetch(`${CINOVA_API}/health`);
+    const data = await response.json();
+
+    if (response.ok && data.status === "online") {
+      if (statusElement) {
+        statusElement.textContent = "AI Backend: Online";
+        statusElement.style.color = "#22c55e";
+      }
+      console.log("CINOVA backend connected successfully.");
+    } else {
+      throw new Error("Backend returned an unexpected response.");
+    }
+  } catch (error) {
+    if (statusElement) {
+      statusElement.textContent = "AI Backend: Offline";
+      statusElement.style.color = "#ef4444";
+    }
+    console.error("CINOVA backend connection failed:", error);
+  }
+}
+
+window.addEventListener("load", checkCINOVABackend);
+</script>
 </body>
 </html>
