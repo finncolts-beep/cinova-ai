@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CINOVA AI — Create Beyond Imagination</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#080810;--panel:#11111e;--purple:#9147ff;--blue:#287dff;--muted:#9999ad}
+body{font-family:Arial,sans-serif;background:var(--bg);color:#fff;min-height:100vh}
+header{height:75px;border-bottom:1px solid #242438;display:flex;align-items:center;justify-content:space-between;padding:0 7%;position:sticky;top:0;background:#080810ed;z-index:10}
+.logo{font-size:26px;font-weight:900;letter-spacing:3px;background:linear-gradient(90deg,#a45aff,#358cff);background-clip:text;color:transparent}
+.logo span{font-size:10px;display:block;letter-spacing:4px;color:#aaa}
+nav{display:flex;gap:25px}
+nav a{color:#b8b8ca;text-decoration:none;font-size:14px}
+nav a:hover{color:#fff}
+.header-btn,.generate{border:0;border-radius:9px;padding:12px 20px;color:#fff;font-weight:bold;background:linear-gradient(100deg,#823cff,#287dff);cursor:pointer}
+.hero{text-align:center;padding:75px 20px 45px}
+.tag{display:inline-block;border:1px solid #55318b;background:#1b102d;padding:8px 15px;border-radius:30px;color:#c69cff;font-size:12px;margin-bottom:22px}
+h1{font-size:clamp(38px,7vw,70px);line-height:1.08;letter-spacing:-2px}
+.gradient{background:linear-gradient(90deg,#ad69ff,#419dff);background-clip:text;color:transparent}
+.hero p{color:var(--muted);max-width:600px;margin:20px auto;line-height:1.7;font-size:15px}
+.workspace{max-width:1050px;margin:0 auto 70px;padding:0 20px}
+.studio{background:var(--panel);border:1px solid #292940;border-radius:18px;padding:28px;box-shadow:0 20px 80px #4420a020}
+.studio-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}
+.studio-head h2{font-size:20px}
+.status{font-size:11px;color:#9d8ab9;background:#211536;padding:7px 12px;border-radius:20px}
+.label{display:block;font-size:13px;font-weight:bold;margin:22px 0 12px}
+.tabs{display:flex;gap:10px}
+.tab{padding:12px 20px;border:1px solid #35354b;background:#171725;color:#aaa;border-radius:9px;cursor:pointer}
+.tab.active{background:#281642;border-color:#9655ff;color:#fff}
+textarea{width:100%;height:125px;background:#090912;border:1px solid #34344a;border-radius:10px;color:white;padding:16px;font:14px Arial;resize:vertical;outline:none}
+textarea:focus{border-color:#9551ff}
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+select{width:100%;padding:13px;background:#090912;border:1px solid #34344a;border-radius:9px;color:white;outline:none}
+.upload{border:1px dashed #555071;border-radius:12px;padding:28px;text-align:center;background:#0c0c18;cursor:pointer;color:#bbb}
+.upload strong{display:block;color:#fff;margin:10px}
+.upload input{display:none}
+#preview{max-width:100%;max-height:180px;margin-top:15px;border-radius:9px;display:none}
+.generate{width:100%;padding:17px;margin-top:25px;font-size:15px}
+.generate:hover,.header-btn:hover{filter:brightness(1.2)}
+.note{text-align:center;color:#77778b;font-size:11px;margin-top:13px}
+.features{max-width:1050px;margin:0 auto 80px;padding:0 20px}
+.features h2{text-align:center;font-size:30px;margin-bottom:30px}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.feature{background:var(--panel);border:1px solid #292940;padding:23px;border-radius:14px}
+.feature .emoji{font-size:27px}
+.feature h3{margin:15px 0 9px;font-size:16px}
+.feature p{font-size:13px;line-height:1.6;color:var(--muted)}
+footer{text-align:center;border-top:1px solid #242438;padding:30px;color:#77778b;font-size:12px}
+@media(max-width:650px){
+header{padding:0 18px}nav{display:none}
+.hero{padding-top:55px}
+.studio{padding:18px}
+.controls,.feature-grid{grid-template-columns:1fr}
+.studio-head{align-items:flex-start;gap:10px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">CINOVA<span>CREATE BEYOND IMAGINATION</span></div>
+<nav>
+<a href="#home">Home</a>
+<a href="#studio">AI Studio</a>
+<a href="#features">Features</a>
+</nav>
+<button class="header-btn" onclick="document.getElementById('studio').scrollIntoView({behavior:'smooth'})">Launch Studio ↗</button>
+</header>
+
+<section class="hero" id="home">
+<div class="tag">✦ YOUR NEXT-GENERATION AI VIDEO STUDIO</div>
+<h1>Imagine It.<br><span class="gradient">CINOVA Creates It.</span></h1>
+<p>Turn your imagination into cinematic videos. Create realistic scenes, animated worlds and incredible stories using artificial intelligence.</p>
+</section>
+
+<main class="workspace" id="studio">
+<div class="studio">
+<div class="studio-head">
+<h2>🎬 Create Your Video</h2>
+<span class="status">CINOVA STUDIO</span>
+</div>
+
+<label class="label">Creation Mode</label>
+<div class="tabs">
+<button class="tab active" id="textTab" onclick="setMode('text')">✍ Text to Video</button>
+<button class="tab" id="imageTab" onclick="setMode('image')">🖼 Image to Video</button>
+</div>
+
+<div id="promptArea">
+<label class="label">Describe your video</label>
+<textarea id="prompt" placeholder="Describe the video you imagine... Example: A futuristic city at night, flying vehicles, glowing neon lights, cinematic camera movement..."></textarea>
+</div>
+
+<div id="uploadArea" style="display:none">
+<label class="label">Upload your starting image</label>
+<label class="upload">
+<span style="font-size:30px">＋</span>
+<strong>Choose an image</strong>
+Tap to upload JPG or PNG
+<input type="file" id="imageInput" accept="image/*">
+<img id="preview" alt="Image preview">
+</label>
+</div>
+
+<label class="label">Video Settings</label>
+<div class="controls">
+<div>
+<label class="label">Visual Style</label>
+<select id="style">
+<option>Realistic Cinematic</option>
+<option>3D Animation</option>
+<option>Anime</option>
+<option>Fantasy</option>
+<option>Documentary</option>
+<option>Sci-Fi</option>
+</select>
+</div>
+<div>
+<label class="label">Duration</label>
+<select id="duration">
+<option value="10">10 seconds</option>
+<option value="30">30 seconds</option>
+<option value="60">1 minute</option>
+<option value="120">2 minutes</option>
+<option value="300">5 minutes</option>
+<option value="600">10 minutes</option>
+</select>
+</div>
+<div>
+<label class="label">Aspect Ratio</label>
+<select id="ratio">
+<option>16:9 Landscape</option>
+<option>9:16 Portrait</option>
+<option>1:1 Square</option>
+</select>
+</div>
+</div>
+
+<button class="generate" onclick="generateVideo()">✦ Generate My Video</button>
+<p class="note">CINOVA AI generation engine is not connected yet. We're building it.</p>
+</div>
+</main>
+
+<section class="features" id="features">
+<h2>Everything Starts With An Idea.</h2>
+<div class="feature-grid">
+<div class="feature">
+<div class="emoji">🎥</div>
+<h3>Text to Video</h3>
+<p>Transform written descriptions into cinematic video scenes.</p>
+</div>
+<div class="feature">
+<div class="emoji">🖼️</div>
+<h3>Image to Video</h3>
+<p>Bring still images to life with AI-powered motion.</p>
+</div>
+<div class="feature">
+<div class="emoji">🌌</div>
+<h3>Multiple Visual Styles</h3>
+<p>Create realistic cinematic videos, 3D animation and more.</p>
+</div>
+<div class="feature">
+<div class="emoji">⏱️</div>
+<h3>Long-Form Creation</h3>
+<p>Our planned architecture supports video projects up to 10 minutes.</p>
+</div>
+<div class="feature">
+<div class="emoji">🎭</div>
+<h3>Story Consistency</h3>
+<p>Our planned workflow will help maintain characters and scenes across shots.</p>
+</div>
+<div class="feature">
+<div class="emoji">✨</div>
+<h3>Creative Freedom</h3>
+<p>Your imagination is the starting point. Create without limits to your ideas.</p>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="logo">CINOVA</div>
+<p style="margin-top:12px">Create Beyond Imagination.</p>
+<p style="margin-top:8px">© 2026 CINOVA AI. All rights reserved.</p>
+</footer>
+
+<script>
+let mode="text";
+
+function setMode(newMode){
+mode=newMode;
+document.getElementById("textTab").classList.toggle("active",mode==="text");
+document.getElementById("imageTab").classList.toggle("active",mode==="image");
+document.getElementById("promptArea").style.display=mode==="text"?"block":"none";
+document.getElementById("uploadArea").style.display=mode==="image"?"block":"none";
+}
+
+document.getElementById("imageInput").addEventListener("change",function(){
+const file=this.files[0];
+if(file){
+const preview=document.getElementById("preview");
+preview.src=URL.createObjectURL(file);
+preview.style.display="block";
+}
+});
+
+function generateVideo(){
+const prompt=document.getElementById("prompt").value.trim();
+const image=document.getElementById("imageInput").files[0];
+
+if(mode==="text"&&!prompt){
+alert("Please describe the video you want to create.");
+return;
+}
+if(mode==="image"&&!image){
+alert("Please upload an image first.");
+return;
+}
+
+alert("Your CINOVA studio interface is working! The AI video generation engine is the next stage of development.");
+}
+</script>
+</body>
+</html>
