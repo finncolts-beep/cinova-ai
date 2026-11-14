@@ -222,21 +222,64 @@ preview.style.display="block";
 }
 });
 
-function generateVideo(){
-const prompt=document.getElementById("prompt").value.trim();
-const image=document.getElementById("imageInput").files[0];
 
-if(mode==="text"&&!prompt){
-alert("Please describe the video you want to create.");
-return;
-}
-if(mode==="image"&&!image){
-alert("Please upload an image first.");
-return;
+async function generateVideo(){
+  const prompt = document.getElementById("prompt").value.trim();
+  const image = document.getElementById("imageInput").files[0];
+  const style = document.getElementById("style").value;
+  const duration = document.getElementById("duration").value;
+  const ratio = document.getElementById("ratio").value;
+
+  if(mode === "text" && !prompt){
+    alert("Please describe the video you want to create.");
+    return;
+  }
+
+  if(mode === "image" && !image){
+    alert("Please upload an image first.");
+    return;
+  }
+
+  const button = document.querySelector(".generate");
+  button.disabled = true;
+  button.textContent = "Connecting to CINOVA...";
+
+  try {
+    const response = await fetch(
+      "https://cinova-backend.finncolts.workers.dev/api/generate",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          mode: mode,
+          prompt: prompt,
+          style: style,
+          duration: Number(duration),
+          aspectRatio: ratio
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if(response.status === 501){
+      alert("CINOVA connected successfully, but the AI video generation engine is not connected yet. Your settings were sent to the backend.");
+    } else if(!response.ok){
+      throw new Error(data.message || "Generation request failed.");
+    } else {
+      alert(data.message || "Your request was received by CINOVA.");
+    }
+
+  } catch(error) {
+    alert("CINOVA connection error: " + error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = "✦ Generate My Video";
+  }
 }
 
-alert("Your CINOVA studio interface is working! The AI video generation engine is the next stage of development.");
-}
 </script>
 
 <script>
